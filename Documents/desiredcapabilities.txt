@@ -1,0 +1,38 @@
+WebDriver driver = null;
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		
+		if (remoteServer == null || remoteServer.trim().equals("")) {
+			System.setProperty("webdriver.ie.driver", "lib/iedriver/IEDriverServer.exe");
+			capabilities.setCapability("IE.binary", "lib/iedriver/IEDriverServer.exe");
+		}
+		else {
+			File file =new File("C:\\SupplyChain\\IEDriverServer_x64_2.48.0\\IEDriverServer.exe");
+			System.setProperty("webdriver.ie.driver",file.getAbsolutePath());
+			capabilities.setBrowserName("internet explorer");
+			capabilities.setCapability("IE.binary", file.getAbsolutePath());
+		}	
+		
+		capabilities.setCapability("initialBrowserUrl", "http://wmslx0013.hq.target.com:10300");
+		capabilities.setCapability("ignoreProtectedModeSettings", true);
+		capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+		capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+		capabilities.setCapability("nativeEvents",false);   
+		capabilities.setCapability("unexpectedAlertBehaviour", "accept");
+		capabilities.setCapability("disable-popup-blocking", true);
+		capabilities.setCapability("enablePersistentHover", true);
+		capabilities.setJavascriptEnabled(true);
+		
+		if (remoteServer == null || remoteServer.trim().equals("")) {
+			driver = (new InternetExplorerDriver(capabilities));
+		} else {
+			URL remoteSeleniumUrl = null;
+
+			try {
+
+				remoteSeleniumUrl = new URL("http://" + remoteServer + ":4444/wd/hub");
+				log.info("remoteServer Value = \"" + remoteSeleniumUrl + "\"");
+			} catch (MalformedURLException e) {
+				log.info("MalformedURLException: " + e);
+			}
+			driver = new RemoteWebDriver(remoteSeleniumUrl, capabilities);
+		}
