@@ -60,7 +60,7 @@ public final class Check_Test {
       oAction.moveToElement(lstList);
       oAction.contextClick(lstList).build().perform();  /* this will perform right click */
       Thread.sleep(3000);
-//      WebElement elementOpen = driver.findElement(By.linkText("Copy image")); /*This will select menu after right click */
+//      //WebElement elementOpen = driver.findElement(By.linkText("Copy image")); /*This will select menu after right click */
 //      elementOpen.click();      
       Robot robot = new Robot();
       robot.keyPress(KeyEvent.VK_DOWN);
